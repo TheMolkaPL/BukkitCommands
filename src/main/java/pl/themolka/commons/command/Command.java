@@ -1,9 +1,10 @@
 package pl.themolka.commons.command;
 
+import org.bukkit.command.CommandSender;
+
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-
-import org.bukkit.command.CommandSender;
 
 public class Command {
     private final String[] name;
@@ -70,25 +71,33 @@ public class Command {
         return this.completer;
     }
 
-    public void handleCommand(CommandSender sender, CommandContext context) throws Exception {
+    public void handleCommand(CommandSender sender, CommandContext context) throws Throwable {
         if (this.getMethod() == null) {
             return;
         }
 
-        this.getMethod().setAccessible(true);
-        this.getMethod().invoke(this.getClassObject(), sender, context);
+        try {
+            this.getMethod().setAccessible(true);
+            this.getMethod().invoke(this.getClassObject(), sender, context);
+        } catch (InvocationTargetException ex) {
+            throw ex.getTargetException();
+        }
     }
 
-    public List<String> handleCompleter(CommandSender sender, CommandContext context) throws Exception {
+    public List<String> handleCompleter(CommandSender sender, CommandContext context) throws Throwable {
         if (this.getCompleter() == null) {
             return null;
         }
 
-        this.getCompleter().setAccessible(true);
-        Object result = this.getCompleter().invoke(this.getClassObject(), sender, context);
+        try {
+            this.getCompleter().setAccessible(true);
+            Object result = this.getCompleter().invoke(this.getClassObject(), sender, context);
 
-        if (result instanceof List) {
-            return (List<String>) result;
+            if (result instanceof List) {
+                return (List<String>) result;
+            }
+        } catch (InvocationTargetException ex) {
+            throw ex.getTargetException();
         }
 
         return null;
