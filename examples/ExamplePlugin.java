@@ -28,7 +28,7 @@ public class ExamplePlugin extends JavaPlugin {
         String message = ChatColor.translateAlternateColorCodes('&', context.getParams(0));
 
         for (Player online : this.getServer().getOnlinePlayers()) {
-            if (ops && !sender.isOp()) {
+            if (ops && !online.isOp()) {
                 continue;
             }
 
