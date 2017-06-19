@@ -1,11 +1,5 @@
 package pl.themolka.commons.command;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
@@ -17,6 +11,12 @@ import org.bukkit.help.HelpTopic;
 import org.bukkit.help.HelpTopicComparator;
 import org.bukkit.help.IndexHelpTopic;
 import org.bukkit.plugin.Plugin;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class BukkitCommands extends Commands implements CommandExecutor, TabCompleter {
     private final Plugin plugin;
@@ -76,7 +76,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
             }
         } catch (NumberFormatException ex) {
             sender.sendMessage(ChatColor.RED + "Musisz podac liczbe, nie ciag znakow!");
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             sender.sendMessage(ChatColor.RED + "Wykryto niespodziewany blad - powiadom o tym administracje!");
             sender.sendMessage(ChatColor.RED + ex.getLocalizedMessage());
         }
@@ -92,7 +92,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
             } else {
                 return context.getCommand().handleCompleter(sender, context);
             }
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             return null;
         }
     }
