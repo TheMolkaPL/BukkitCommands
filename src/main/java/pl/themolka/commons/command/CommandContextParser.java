@@ -17,9 +17,7 @@ public class CommandContextParser implements CommandContext.IContextParser {
         String flag = null;
         StringBuilder flagValue = null;
 
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
-
+        for (String arg : args) {
             if (flag != null && flagValue == null && arg.startsWith(String.valueOf(FLAG_QUOTE))) {
                 if (arg.endsWith(String.valueOf(FLAG_QUOTE))) {
                     this.flags.put(flag, arg.substring(1, arg.length() - 1));
