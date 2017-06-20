@@ -33,11 +33,7 @@ public class CommandContext {
     }
 
     public String getFlag(String flag, String def) {
-        if (this.flags.containsKey(flag)) {
-            return this.flags.get(flag);
-        } else {
-            return def;
-        }
+        return this.flags.getOrDefault(flag, def);
     }
 
     // Flags = Booleans
