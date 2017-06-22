@@ -79,6 +79,7 @@ public class BukkitCommands extends Commands implements CommandExecutor, TabComp
         } catch (Throwable ex) {
             sender.sendMessage(ChatColor.RED + "Wykryto niespodziewany blad - powiadom o tym administracje!");
             sender.sendMessage(ChatColor.RED + ex.getLocalizedMessage());
+            ex.printStackTrace();
         }
     }
 
